@@ -1,0 +1,24 @@
+﻿@model IEnumerable<Announcement>
+
+<h2>Announcements</h2>
+<a href="/Announcements/Create" class="btn btn-primary">Create Announcement</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Date Posted</th>
+            <th>Content</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Title</td>
+                <td>@(item.DatePosted?.ToShortDateString() ?? "N/A")</td>
+                <td>@item.Content</td>
+            </tr>
+        }
+    </tbody>
+</table>

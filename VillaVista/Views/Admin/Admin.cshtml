@@ -1,0 +1,24 @@
+﻿<form id="addUserForm">
+    <input type="text" id="fullName" placeholder="Full Name" required />
+    <input type="email" id="email" placeholder="Email" required />
+    <input type="password" id="password" placeholder="Password" required />
+    <select id="role">
+        <option value="Staff">Staff</option>
+        <option value="Homeowner">Homeowner</option>
+    </select>
+    <button type="submit">Add User</button>
+</form>
+
+<script>
+    $("#addUserForm").submit(function (e) {
+        e.preventDefault();
+        $.post("/Admin/AddUser", {
+            FullName: $("#fullName").val(),
+            Email: $("#email").val(),
+            Password: $("#password").val(),
+            Role: $("#role").val()
+        }, function (data) {
+            alert(data.message);
+        });
+    });
+</script>
