@@ -2,8 +2,11 @@
 
 public class ResetPasswordViewModel
 {
-    public string Token { get; set; }
+    [Required]
     public string Email { get; set; }
+
+    [Required]
+    public string Token { get; set; }
 
     [Required]
     [DataType(DataType.Password)]
@@ -13,3 +16,4 @@ public class ResetPasswordViewModel
     [Compare("NewPassword", ErrorMessage = "Passwords do not match.")]
     public string ConfirmPassword { get; set; }
 }
+

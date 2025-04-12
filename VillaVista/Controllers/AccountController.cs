@@ -20,12 +20,14 @@ public class AccountController : Controller
     public AccountController(SignInManager<ApplicationUser> signInManager,
                              UserManager<ApplicationUser> userManager,
                              RoleManager<IdentityRole> roleManager,
-                                HomeownerDbContext context, IEmailSender emailSender)
+                             HomeownerDbContext context, 
+                             IEmailSender emailSender)
     {
         _signInManager = signInManager;
         _userManager = userManager;
         _roleManager = roleManager;
         _context = context;
+        _emailSender = emailSender;
     }
 
     [HttpPost]
@@ -117,7 +119,7 @@ public class AccountController : Controller
 
         if (roles.Contains("Admin"))
         {
-            redirectUrl = Url.Action("Admin", "Dashboard");
+            redirectUrl = Url.Action("Index", "AdminDashboard");
         }
         else if (roles.Contains("Staff"))
         {
@@ -125,7 +127,7 @@ public class AccountController : Controller
         }
         else if (roles.Contains("Homeowner"))
         {
-            redirectUrl = Url.Action("Homeowner", "Dashboard");
+            redirectUrl = Url.Action("Index", "HomeownerDashboard");
         }
 
         return Json(new { success = true, redirectUrl });

@@ -86,3 +86,76 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     });
 });
+
+$(document).ready(function () {
+    $('#forgotPasswordForm').on('submit', function (e) {
+        e.preventDefault();
+
+        var email = $('#forgotEmail').val();
+
+        if (!email) {
+            alert("Please enter your email.");
+            return;
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '/Account/ForgotPassword',
+            contentType: 'application/json',
+            data: JSON.stringify({ Email: email }),
+            success: function (response) {
+                alert("Reset link sent! Please check your email.");
+                $('#forgotPasswordModal').modal('hide');
+            },
+            error: function (xhr) {
+                var response = xhr.responseJSON;
+                alert(response?.message || "Something went wrong.");
+            }
+        });
+    });
+});
+
+window.addEventListener("DOMContentLoaded", function () {
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get("token");
+    const email = params.get("email");
+
+    if (token && email) {
+        // Set values inside hidden fields
+        document.getElementById("resetToken").value = token;
+        document.getElementById("resetEmail").value = email;
+
+        // Show modal
+        const resetModal = new bootstrap.Modal(document.getElementById('resetPasswordModal'));
+        resetModal.show();
+    }
+});
+
+// Handle Reset Password Submit
+document.getElementById("resetPasswordForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const data = {
+        Token: document.getElementById("resetToken").value,
+        Email: document.getElementById("resetEmail").value,
+        NewPassword: document.getElementById("newPassword").value,
+        ConfirmPassword: document.getElementById("confirmPassword").value
+    };
+
+    fetch("/Account/ResetPassword", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: new URLSearchParams(data)
+    })
+        .then(response => response.json())
+        .then(result => {
+            if (result.success) {
+                alert("Password reset successful!");
+                location.href = "/"; // redirect to homepage or login
+            } else {
+                alert("Error: " + (result.message || "Something went wrong."));
+            }
+        });
+});

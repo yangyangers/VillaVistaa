@@ -1,0 +1,137 @@
+﻿@{
+    ViewData["Title"] = "Announcements";
+}
+
+<div class="announcement-container">
+    <div class="announcement-header">
+        <h2>ANNOUNCEMENTS</h2>
+        <div class="header-right">
+            <span class="time">10:00 AM</span>
+            <span class="date">Sunday, 20 February 2023</span>
+            <i class="bi bi-bell"></i>
+            <i class="bi bi-person-circle"></i>
+        </div>
+    </div>
+
+    <div class="announcement-table">
+        <table>
+            <thead>
+                <tr>
+                    <th><input type="checkbox"></th>
+                    <th>Date</th>
+                    <th>Announcement</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>
+                        <strong>February 24, 2025</strong>
+                        <br>
+                        <span>10:13 AM</span>
+                    </td>
+                    <td>
+                        <strong>Pool Maintenance Closure</strong>
+                        <p>The community pool will be closed from February 27th to March 1st for scheduled cleaning.</p>
+                    </td>
+                    <td><i class="bi bi-three-dots-vertical"></i></td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>
+                        <strong>February 24, 2025</strong>
+                        <br>
+                        <span>10:11 AM</span>
+                    </td>
+                    <td>
+                        <strong>Community Meeting</strong>
+                        <p>“Annual HOA Meeting - March 5th” - Join us at the clubhouse to discuss upcoming community improvements.</p>
+                    </td>
+                    <td><i class="bi bi-three-dots-vertical"></i></td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>
+                        <strong>February 24, 2025</strong>
+                        <br>
+                        <span>10:03 AM</span>
+                    </td>
+                    <td>
+                        <strong>Policy & Compliance</strong>
+                        <p>“Updated Parking Rules” - Guest parking is now limited to 48 hours. See full guidelines in the HOA portal.</p>
+                    </td>
+                    <td><i class="bi bi-three-dots-vertical"></i></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+    body {
+        font-family: 'Times New Roman', sans-serif;
+        background-color: #EDECE6;
+        margin: 0;
+        padding: 0;
+    }
+
+    .announcement-container {
+        max-width: 900px;
+        margin: 20px auto;
+        background-color: #6B7258;
+        padding: 20px;
+        border-radius: 10px;
+        color: white;
+    }
+
+    .announcement-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo {
+        height: 40px;
+    }
+
+    .header-right {
+        text-align: right;
+    }
+
+        .header-right i {
+            margin-left: 10px;
+            font-size: 20px;
+        }
+
+    .announcement-table {
+        background-color: white;
+        padding: 10px;
+        border-radius: 8px;
+        color: black;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #D9D7C8;
+        font-weight: bold;
+    }
+
+    td i {
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    tr:hover {
+        background-color: #f5f5f5;
+    }
+</style>

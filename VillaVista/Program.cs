@@ -89,4 +89,23 @@ async Task EnsureRolesAndAdminExist(RoleManager<IdentityRole> roleManager, UserM
             await userManager.AddToRoleAsync(adminUser, "Admin");
         }
     }
+
+    // ✅ Create a second admin if it doesn't exist
+    //if (userManager.Users.All(u => u.Email != "shaznaylopez@gmail.com"))
+    {
+        var secondAdminUser = new ApplicationUser
+        {
+            UserName = "shaznaylopez@gmail.com",
+            Email = "shaznaylopez@gmail.com",
+            Fullname = "Shaznay Lopez"
+        };
+
+        var result = await userManager.CreateAsync(secondAdminUser, "Admin@456");
+
+        if (result.Succeeded)
+        {
+            await userManager.AddToRoleAsync(secondAdminUser, "Admin");
+        }
+    }
+
 }

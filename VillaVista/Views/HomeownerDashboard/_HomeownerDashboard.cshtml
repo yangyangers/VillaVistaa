@@ -1,0 +1,126 @@
+﻿<!-- Font Awesome 6 (latest) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+    body {
+        font-family: 'Times New Roman', Times, serif
+        background: #f5f5f5;
+        color: #333;
+    }
+
+    .main-content {
+        flex-grow: 1;
+        background: #ffffff;
+        color: black;
+        border-radius: 10px;
+        padding: 20px;
+    }
+
+    .header {
+        background: #4a5d4e;
+        color: white;
+        padding: 15px;
+        border-radius: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .search-bar input {
+        border-radius: 5px;
+        padding: 8px;
+        width: 200px;
+        border: none;
+    }
+
+    .widget {
+        background: #fff;
+        color: #333;
+        padding: 15px;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+        .widget h5 {
+            font-weight: bold;
+        }
+
+        .widget a {
+            float: right;
+            font-size: 0.9rem;
+        }
+
+    .members, .recent-uses {
+        background: #ffffff;
+        padding: 15px;
+        border-radius: 10px;
+        color: #333;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+        .members ul, .recent-uses ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .members li, .recent-uses li {
+            padding: 5px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+</style>
+
+<!-- Main Content -->
+
+
+    <!-- Dashboard Widgets -->
+    <div class="row mt-4">
+        <div class="col-md-6 col-lg-3">
+            <div class="widget">
+                <h5>Announcement <a href="#">View All</a></h5>
+                <p>• Pool Maintenance Closure</p>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+            <div class="widget">
+                <h5>Billings & Payment <a href="#">View All</a></h5>
+                <p>• Upcoming Payment Due Date</p>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+            <div class="widget">
+                <h5>Event Calendar <a href="#">View All</a></h5>
+                <p>• March 03, 2025 - Spring Festival</p>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+            <div class="widget">
+                <h5>Service Request <a href="#">View All</a></h5>
+                <p>• Maintenance Schedule</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Homeowner Members -->
+    <div class="members mt-4">
+        <h5>Homeowner Members</h5>
+        <ul>
+            <li><i class="fas fa-user-circle"></i> Alpha Bravo <span>4:55 PM</span></li>
+            <li><i class="fas fa-user-circle"></i> Charlie Deltali>
+        </ul>
+        <a href="#">View All Members</a>
+    </div>
+
+    <!-- Recent Uses -->
+    <div class="recent-uses mt-4">
+        <h5>Recent Uses</h5>
+        <ul>
+            <li><i class="fas fa-video"></i> CCTV <span>8:30 AM</span> <strong>5 kWh</strong></li>
+            <li><i class="fas fa-tv"></i> Main TV <span>8:30 AM</span> <strong>8 kWh</strong></li>
+            <li><i class="fas fa-lightbulb"></i> Light <span>8:30 AM</span> <strong>10 kWh</strong></li>
+            <li><i class="fas fa-fan"></i> Air Conditioner <span>8:30 AM</span> <strong>15 kWh</strong></li>
+        </ul>
+    </div>
+</div>
