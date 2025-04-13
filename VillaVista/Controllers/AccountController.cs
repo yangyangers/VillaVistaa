@@ -123,7 +123,7 @@ public class AccountController : Controller
         }
         else if (roles.Contains("Staff"))
         {
-            redirectUrl = Url.Action("Staff", "Dashboard");
+            redirectUrl = Url.Action("Index", "StaffDashboard");
         }
         else if (roles.Contains("Homeowner"))
         {

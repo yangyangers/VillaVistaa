@@ -1,7 +1,5 @@
-﻿<!--Index.cshtml-->
-
-@{
-    ViewData["Title"] = "Admin Dashboard";
+﻿@{
+    ViewData["Title"] = "Staff Dashboard";
     Layout = null;
 }
 
@@ -114,21 +112,32 @@
     <!-- Sidebar -->
     <div class="sidebar">
         <div class="sidebar-header">
-            <h5>Admin Dashboard</h5>
+            <h5>Staff Portal</h5>
             <p>Homeowners Association</p>
         </div>
-    <a href="#" class="nav-link active" id="dashboard-link"><i class="bi bi-grid-1x2"></i> Dashboard</a>
-        <a href="#" class="nav-link" id="residents-link"><i class="bi bi-people"></i> Residents</a>
-        <a href="#" class="nav-link" id="service-link"><i class="bi bi-tools"></i> Service Request</a>
-        <a href="#" class="nav-link" id="billings-link"><i class="bi bi-cash-stack"></i> Billings & Payments</a>
-        <a href="#" class="nav-link" id="events-link"><i class="bi bi-calendar3"></i> Events</a>
-        <a href="#" class="nav-link" id="announcement-link"><i class="bi bi-megaphone"></i> Announcement</a>
-        <a href="#" class="nav-link"id="staff-link"><i class="bi bi-people"></i> Staff</a>
-        <a href="#" class="nav-link" id="setting-link"><i class="bi bi-gear"></i> Settings</a>
-        
+
+        <a href="#" class="nav-link active" id="dashboard-link">
+            <i class="bi bi-grid-1x2"></i> Dashboard
+        </a>
+        <a href="#" class="nav-link" id="service-link">
+            <i class="bi bi-list-check"></i> Service Request
+        </a>
+        <a href="#" class="nav-link" id="maintenance-link">
+            <i class="bi bi-tools"></i> Maintenance Task
+        </a>
+        <a href="#" class="nav-link" id="residents-link">
+            <i class="bi bi-people"></i> Residents
+        </a>
+        <a href="#" class="nav-link" id="schedule-link">
+            <i class="bi bi-calendar3"></i> Schedule
+        </a>
+        <a href="#" class="nav-link" id="setting-link">
+            <i class="bi bi-gear"></i> Settings
+        </a>
+
         <div class="logout-button">
             <form asp-controller="Home" asp-action="Index" method="post">
-            @Html.AntiForgeryToken()
+                @Html.AntiForgeryToken()
                 <button type="submit">
                     <i class="bi bi-box-arrow-left"></i> Logout
                 </button>
@@ -136,11 +145,9 @@
         </div>
     </div>
 
-
-
     <!-- Dynamic Content Area -->
     <div class="content" id="main-content">
-        @Html.Partial("_AdminDashboard")
+        @Html.Partial("_StaffDashboard")
     </div>
 
     <!-- AJAX for Dynamic Content -->
@@ -148,7 +155,7 @@
         $(document).ready(function () {
             function loadView(viewName) {
                 $.ajax({
-                    url: "/AdminDashboard/LoadView?view=" + viewName,
+                    url: "/StaffDashboard/LoadView?view=" + viewName,
                     type: "GET",
                     success: function (data) {
                         $("#main-content").html(data);
@@ -156,22 +163,15 @@
                 });
             }
 
-            // Load Admin Dashboard by default
-            loadView("AdminDashboard");
+            // Load Staff Dashboard by default
+            loadView("StaffDashboard");
 
             // Sidebar Click Events
             $("#dashboard-link").click(function (e) {
                 e.preventDefault();
                 $(".nav-link").removeClass("active");
                 $(this).addClass("active");
-                loadView("AdminDashboard");
-            });
-
-            $("#residents-link").click(function (e) {
-                e.preventDefault();
-                $(".nav-link").removeClass("active");
-                $(this).addClass("active");
-                loadView("Residents");
+                loadView("StaffDashboard");
             });
 
             $("#service-link").click(function (e) {
@@ -181,67 +181,34 @@
                 loadView("ServiceRequest");
             });
 
-            $("#billings-link").click(function (e) {
+            $("#maintenance-link").click(function (e) {
                 e.preventDefault();
                 $(".nav-link").removeClass("active");
                 $(this).addClass("active");
-                loadView("BillingPayment");
+                loadView("Maintenance");
             });
 
-            $("#events-link").click(function (e) {
+            $("#residents-link").click(function (e) {
+                e.preventDefault();
+                $(".nav-link").removeClass("active");
+                $(this).addClass("active");
+                loadView("Residents");
+            });
+
+            $("#schedule-link").click(function (e) {
                 e.preventDefault();
                 $(".nav-link").removeClass("active");
                 $(this).addClass("active");
                 loadView("EventCalendar");
             });
 
-            $("#announcement-link").click(function (e) {
-                e.preventDefault();
-                $(".nav-link").removeClass("active");
-                $(this).addClass("active");
-                loadView("Announcement");
-            });
-
-             $("#staff-link").click(function (e) {
-                e.preventDefault();
-                $(".nav-link").removeClass("active");
-                $(this).addClass("active");
-                loadView("Staff");
-            });
-            
-             $("#setting-link").click(function (e) {
+            $("#setting-link").click(function (e) {
                 e.preventDefault();
                 $(".nav-link").removeClass("active");
                 $(this).addClass("active");
                 loadView("Settings");
             });
-
-                    // Notification Bell Click
-            $("#notificationBell").click(function () {
-                $("#notificationDropdown").toggle();
-
-                if ($("#notificationDropdown").is(":visible")) {
-                    $.ajax({
-                        url: "/AdminDashboard/LoadNotifications",
-                        type: "GET",
-                        success: function (data) {
-                            $("#notificationContent").html(data);
-                        },
-                        error: function () {
-                            $("#notificationContent").html("<p class='text-danger'>Error loading notifications.</p>");
-                        }
-                    });
-                }
-            });
-
-            // Settings Icon Click
-            $("#settingsIcon").click(function () {
-                $(".nav-link").removeClass("active");
-                loadView("AccountSettings"); // Make sure you have _AccountSettings.cshtml
-            });
         });
-
     </script>
-
 </body>
 </html>

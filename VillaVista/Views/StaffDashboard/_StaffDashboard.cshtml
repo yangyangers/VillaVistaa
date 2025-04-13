@@ -1,0 +1,143 @@
+﻿@{
+    ViewData["Title"] = "Staff Dashboard";
+    Layout = null;
+}
+
+<div class="container-fluid p-4">
+    <h4 class="mb-4">Dashboard</h4>
+
+    <div class="row mb-4">
+        <!-- Summary Cards -->
+        <div class="col-md-3 mb-3">
+            <div class="card rounded shadow-sm text-center">
+                <div class="card-body">
+                    <h2 class="fw-bold">248</h2>
+                    <p class="text-muted mb-0">Total Residents</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+            <div class="card rounded shadow-sm text-center">
+                <div class="card-body">
+                    <h2 class="fw-bold">32</h2>
+                    <p class="text-muted mb-0">Pending Requests</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+            <div class="card rounded shadow-sm text-center">
+                <div class="card-body">
+                    <h2 class="fw-bold">8</h2>
+                    <p class="text-muted mb-0">Maintenance Task</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+            <div class="card rounded shadow-sm text-center">
+                <div class="card-body">
+                    <h2 class="fw-bold">15</h2>
+                    <p class="text-muted mb-0">Events Today</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Recent Activities -->
+        <div class="col-md-6 mb-4">
+            <div class="card rounded shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title mb-4">Recent Activities</h5>
+
+                    <div class="mb-3 pb-3 border-bottom">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="mb-1">New Resident Registered</h6>
+                                <small class="text-muted">2 hours ago</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 pb-3 border-bottom">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="mb-1">Maintenance Task completed</h6>
+                                <small class="text-muted">3 hours ago</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="mb-1">New Service Request</h6>
+                                <small class="text-muted">5 hours ago</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Upcoming Events -->
+        <div class="col-md-6 mb-4">
+            <div class="card rounded shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title mb-4">Upcoming Events</h5>
+
+                    <div class="mb-3 pb-3 border-bottom">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="mb-1">Community Meeting</h6>
+                                <small class="text-muted">Today, 2:00 PM</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 pb-3 border-bottom">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="mb-1">Pool Maintenance</h6>
+                                <small class="text-muted">Tomorrow, 9:00 AM</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="mb-1">New Service Request</h6>
+                                <small class="text-muted">May 18, 10:00 AM</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        border: none;
+        border-radius: 8px;
+        background-color: white;
+    }
+
+    .card-title {
+        color: #333;
+        font-weight: 600;
+    }
+
+    h2 {
+        color: #4b6255;
+        font-size: 28px;
+    }
+
+    h6 {
+        font-weight: 500;
+    }
+</style>

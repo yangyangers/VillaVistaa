@@ -1,144 +1,360 @@
-﻿@{
-    ViewData["Title"] = "Billing & Payment";
-    Layout = null;
-}
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@ViewData["Title"]</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <style>
-        body {
-            font-family: 'Times New Roman', serif;
-            background-color: #e5e7da;
-            color: #3b2f21;
-        }
-
-        .dashboard-container {
-            padding: 20px;
-        }
-
-        .card {
-            background: #fff;
-            border-radius: 10px;
-            padding: 15px;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-
-        .billing-header {
-            background-color: #5a6e4f;
-            color: white;
-            padding: 15px;
-            border-radius: 8px;
-            text-align: center;
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        .billing-table {
-            width: 100%;
-            background: white;
-            border-radius: 10px;
-            padding: 15px;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .table thead {
-            background-color: #ddd;
-            font-weight: bold;
-        }
-
-        .btn-paid {
-            background-color: #726e33;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .btn-remove {
-            background-color: #e74c3c;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-    </style>
-</head>
-<body>
-
-    <div class="container-fluid dashboard-container">
-       
-
-        <!-- Admin Billing Dashboard -->
-        <div class="text-center mb-4">
-            <h4>Admin Billing Dashboard</h4>
+﻿<!-- _BillingPayment.cshtml -->
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h2>Billing & Payments</h2>
         </div>
-
-        <div class="row mb-4">
-            <div class="col-md-4">
-                <div class="card">
-                    <h6>Total Dues:</h6>
-                    <h3>100,000</h3>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <h6>Pending Payments:</h6>
-                    <h3>30,000</h3>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <h6>Unpaid Bills:</h6>
-                    <h3>70,000</h3>
-                </div>
-            </div>
-        </div>
-
-        <!-- Homeowners Billing Table -->
-        <div class="billing-table">
-            <h5 class="text-center mb-3">Homeowners Billing</h5>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Homeowners</th>
-                        <th>Lot #</th>
-                        <th>Amount</th>
-                        <th>Due Date</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Alpha Bravo</td>
-                        <td>Lot 12</td>
-                        <td>35,000</td>
-                        <td>2025-02-23</td>
-                        <td>Pending</td>
-                        <td><button class="btn-paid">Mark as Paid</button></td>
-                    </tr>
-                    <tr>
-                        <td>Charlie Delta</td>
-                        <td>Lot 13</td>
-                        <td>35,000</td>
-                        <td>2025-02-14</td>
-                        <td>Paid</td>
-                        <td><button class="btn-remove">Remove</button></td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="col-md-4 text-end">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#generateInvoiceModal">
+                <i class="bi bi-receipt"></i> Generate Invoice
+            </button>
         </div>
     </div>
 
-</body>
-</html>
+    <!-- Stats Overview Cards -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6 class="text-muted">Total Collected</h6>
+                            <h3 class="mb-0">$98,450</h3>
+                        </div>
+                        <div class="text-success">
+                            <i class="bi bi-cash-stack fs-1"></i>
+                        </div>
+                    </div>
+                    <div class="mt-2 text-success small">
+                        <i class="bi bi-arrow-up"></i> +12% from last month
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6 class="text-muted">Outstanding</h6>
+                            <h3 class="mb-0">$12,350</h3>
+                        </div>
+                        <div class="text-danger">
+                            <i class="bi bi-credit-card fs-1"></i>
+                        </div>
+                    </div>
+                    <div class="mt-2 text-danger small">
+                        <i class="bi bi-arrow-up"></i> +5% from last month
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6 class="text-muted">Due This Month</h6>
+                            <h3 class="mb-0">$111,600</h3>
+                        </div>
+                        <div class="text-primary">
+                            <i class="bi bi-calendar-date fs-1"></i>
+                        </div>
+                    </div>
+                    <div class="mt-2 text-primary small">
+                        <i class="bi bi-info-circle"></i> 248 units at $450 each
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6 class="text-muted">Collection Rate</h6>
+                            <h3 class="mb-0">94.8%</h3>
+                        </div>
+                        <div class="text-info">
+                            <i class="bi bi-bar-chart fs-1"></i>
+                        </div>
+                    </div>
+                    <div class="mt-2 text-success small">
+                        <i class="bi bi-arrow-up"></i> +2.3% from last month
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabs Navigation -->
+    <ul class="nav nav-tabs mb-4" id="billingTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="invoices-tab" data-bs-toggle="tab" data-bs-target="#invoices" type="button" role="tab" aria-controls="invoices" aria-selected="true">Invoices</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="payments-tab" data-bs-toggle="tab" data-bs-target="#payments" type="button" role="tab" aria-controls="payments" aria-selected="false">Payments</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="delinquent-tab" data-bs-toggle="tab" data-bs-target="#delinquent" type="button" role="tab" aria-controls="delinquent" aria-selected="false">Delinquent Accounts</button>
+        </li>
+    </ul>
+
+    <!-- Tab Content -->
+    <div class="tab-content" id="billingTabsContent">
+        <!-- Invoices Tab -->
+        <div class="tab-pane fade show active" id="invoices" role="tabpanel" aria-labelledby="invoices-tab">
+            <div class="card">
+                <div class="card-body">
+                    <!-- Search and Filter -->
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search invoices...">
+                                <button class="btn btn-outline-secondary" type="button">
+                                    <i class="bi bi-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-6 text-end">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
+                                    Filter by Status
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">All Invoices</a></li>
+                                    <li><a class="dropdown-item" href="#">Paid</a></li>
+                                    <li><a class="dropdown-item" href="#">Unpaid</a></li>
+                                    <li><a class="dropdown-item" href="#">Overdue</a></li>
+                                </ul>
+                            </div>
+                            <div class="btn-group ms-2">
+                                <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
+                                    Period
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Current Month</a></li>
+                                    <li><a class="dropdown-item" href="#">Last 3 Months</a></li>
+                                    <li><a class="dropdown-item" href="#">Last 6 Months</a></li>
+                                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Invoices Table -->
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Invoice #</th>
+                                    <th>Resident</th>
+                                    <th>Unit</th>
+                                    <th>Amount</th>
+                                    <th>Issue Date</th>
+                                    <th>Due Date</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>#INV-2025-042</td>
+                                    <td>John Smith</td>
+                                    <td>Unit 102</td>
+                                    <td>$450.00</td>
+                                    <td>Apr 1, 2025</td>
+                                    <td>Apr 15, 2025</td>
+                                    <td><span class="badge bg-warning text-dark">Unpaid</span></td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-primary">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">
+                                                <i class="bi bi-envelope"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-outline-success">
+                                                <i class="bi bi-check2-circle"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>#INV-2025-041</td>
+                                    <td>Maria Johnson</td>
+                                    <td>Unit 215</td>
+                                    <td>$450.00</td>
+                                    <td>Apr 1, 2025</td>
+                                    <td>Apr 15, 2025</td>
+                                    <td><span class="badge bg-success">Paid</span></td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-primary">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">
+                                                <i class="bi bi-envelope"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>#INV-2025-040</td>
+                                    <td>Robert Davis</td>
+                                    <td>Unit 148</td>
+                                    <td>$450.00</td>
+                                    <td>Apr 1, 2025</td>
+                                    <td>Apr 15, 2025</td>
+                                    <td><span class="badge bg-danger">Overdue</span></td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-primary">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">
+                                                <i class="bi bi-envelope"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-outline-success">
+                                                <i class="bi bi-check2-circle"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payments Tab -->
+        <div class="tab-pane fade" id="payments" role="tabpanel" aria-labelledby="payments-tab">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Payment ID</th>
+                                    <th>Invoice #</th>
+                                    <th>Resident</th>
+                                    <th>Unit</th>
+                                    <th>Amount</th>
+                                    <th>Date</th>
+                                    <th>Method</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>#PAY-4872</td>
+                                    <td>#INV-2025-041</td>
+                                    <td>Maria Johnson</td>
+                                    <td>Unit 215</td>
+                                    <td>$450.00</td>
+                                    <td>Apr 10, 2025</td>
+                                    <td>Credit Card</td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-outline-primary">
+                                            <i class="bi bi-file-earmark-text"></i> Receipt
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>#PAY-4871</td>
+                                    <td>#INV-2025-039</td>
+                                    <td>Emily Johnson</td>
+                                    <td>Unit 172</td>
+                                    <td>$450.00</td>
+                                    <td>Apr 9, 2025</td>
+                                    <td>Bank Transfer</td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-outline-primary">
+                                            <i class="bi bi-file-earmark-text"></i> Receipt
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>#PAY-4870</td>
+                                    <td>#INV-2025-035</td>
+                                    <td>Jessica Miller</td>
+                                    <td>Unit 203</td>
+                                    <td>$450.00</td>
+                                    <td>Apr 7, 2025</td>
+                                    <td>Check</td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-outline-primary">
+                                            <i class="bi bi-file-earmark-text"></i> Receipt
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Delinquent Accounts Tab -->
+        <div class="tab-pane fade" id="delinquent" role="tabpanel" aria-labelledby="delinquent-tab">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Resident</th>
+                                    <th>Unit</th>
+                                    <th>Total Overdue</th>
+                                    <th>Months Overdue</th>
+                                    <th>Last Payment</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Robert Davis</td>
+                                    <td>Unit 148</td>
+                                    <td>$900.00</td>
+                                    <td>2</td>
+                                    <td>Feb 10, 2025</td>
+                                    <td><span class="badge bg-danger">Payment Notice Sent</span></td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-primary">
+                                                <i class="bi bi-envelope"></i> Send Notice
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">
+                                                <i class="bi bi-telephone"></i> Call
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Michael Brown</td>
+                                    <td>Unit 309</td>
+                                    <td>$1,350.00</td>
+                                    <td>3</td>
+                                    <td>Jan 5, 2025</td>
+                                    <td><span class="badge bg-danger">Payment Notice Sent</span></td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-primary">
+                                                <i class="bi bi-envelope"></i> Send Notice
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">
+                                                <i class="bi bi-telephone"></i> Call
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

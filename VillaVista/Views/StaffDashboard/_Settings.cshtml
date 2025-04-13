@@ -1,0 +1,230 @@
+﻿@{
+    ViewData["Title"] = "Settings";
+    Layout = null;
+}
+
+<div class="container-fluid p-4">
+    <h4 class="mb-4">Settings</h4>
+
+    <div class="card border-0 shadow-sm">
+        <div class="card-body p-4">
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <h5 class="mb-4">Profile Settings</h5>
+
+                    <div class="mb-3">
+                        <label for="settingsName" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="settingsName" value="John Smith">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="settingsEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="settingsEmail" value="john.smith@example.com">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="settingsPhone" class="form-label">Phone</label>
+                        <input type="tel" class="form-control" id="settingsPhone" value="+1 234 567 890">
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <h5 class="mb-4">Security Settings</h5>
+
+                    <div class="mb-3">
+                        <label for="currentPassword" class="form-label">Current Password</label>
+                        <input type="password" class="form-control" id="currentPassword">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="newPassword" class="form-label">New Password</label>
+                        <input type="password" class="form-control" id="newPassword">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="confirmPassword" class="form-label">Confirm Password</label>
+                        <input type="password" class="form-control" id="confirmPassword">
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-2">
+                <h5 class="mb-4">Notification Settings</h5>
+
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <label class="form-check-label fw-bold mb-1">Email Notifications</label>
+                            <p class="text-muted m-0">Receive email notifications for new requests</p>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="emailNotifications" checked style="width: 3em; height: 1.5em;">
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <label class="form-check-label fw-bold mb-1">SMS Notifications</label>
+                            <p class="text-muted m-0">Receive SMS alerts for urgent matters</p>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="smsNotifications" checked style="width: 3em; height: 1.5em;">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <label class="form-check-label fw-bold mb-1">Maintenance Reminders</label>
+                            <p class="text-muted m-0">Receive notifications about scheduled maintenance</p>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="maintenanceNotifications" style="width: 3em; height: 1.5em;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <h5 class="mb-4">Display Settings</h5>
+                <div class="mb-3">
+                    <label for="themeSelect" class="form-label fw-bold">Theme</label>
+                    <select class="form-select" id="themeSelect">
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                        <option value="system">System Default</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="dateFormatSelect" class="form-label fw-bold">Date Format</label>
+                    <select class="form-select" id="dateFormatSelect">
+                        <option value="mdy">MM/DD/YYYY</option>
+                        <option value="dmy">DD/MM/YYYY</option>
+                        <option value="ymd">YYYY-MM-DD</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <h5 class="mb-4">Privacy Settings</h5>
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <label class="form-check-label fw-bold mb-1">Show Contact Information</label>
+                            <p class="text-muted m-0">Make your contact information visible to other residents</p>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="showContactInfo" checked style="width: 3em; height: 1.5em;">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <label class="form-check-label fw-bold mb-1">Activity Tracking</label>
+                            <p class="text-muted m-0">Allow the system to track your usage for improvements</p>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="activityTracking" checked style="width: 3em; height: 1.5em;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <h5 class="mb-4">Account Management</h5>
+                <div class="mb-3">
+                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deactivateAccountModal">
+                        Deactivate Account
+                    </button>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-end mt-4">
+                <button type="button" class="btn btn-secondary me-2">Cancel</button>
+                <button type="button" class="btn btn-success" id="saveSettingsBtn">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Deactivate Account Modal -->
+<div class="modal fade" id="deactivateAccountModal" tabindex="-1" aria-labelledby="deactivateAccountModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deactivateAccountModalLabel">Confirm Account Deactivation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to deactivate your account? This action cannot be undone immediately and will require administrator approval to restore access.</p>
+                <div class="mb-3">
+                    <label for="deactivateReason" class="form-label">Reason for deactivation (optional)</label>
+                    <textarea class="form-control" id="deactivateReason" rows="3"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="confirmDeactivatePassword" class="form-label">Enter your password to confirm</label>
+                    <input type="password" class="form-control" id="confirmDeactivatePassword">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" id="confirmDeactivateBtn">Deactivate Account</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        // Initialize tooltips
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        });
+
+        // Save settings button click handler
+        $("#saveSettingsBtn").on("click", function() {
+            // Show loading indicator
+            $(this).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Saving...');
+            $(this).prop('disabled', true);
+
+            // Simulate saving (replace with actual AJAX call)
+            setTimeout(function() {
+                $("#saveSettingsBtn").html('Save Changes');
+                $("#saveSettingsBtn").prop('disabled', false);
+
+                // Show success toast
+                showToast('Settings saved successfully!', 'success');
+            }, 1500);
+        });
+
+        // Function to show toast notifications
+        function showToast(message, type) {
+            // Create toast element
+            var toast = $('<div class="toast align-items-center text-white bg-' + type + '" role="alert" aria-live="assertive" aria-atomic="true">' +
+                '<div class="d-flex">' +
+                '<div class="toast-body">' + message + '</div>' +
+                '<button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>' +
+                '</div>' +
+                '</div>');
+
+            // Append to toast container
+            if ($('#toastContainer').length === 0) {
+                $('body').append('<div id="toastContainer" class="toast-container position-fixed bottom-0 end-0 p-3"></div>');
+            }
+            $('#toastContainer').append(toast);
+
+            // Initialize and show toast
+            var toastElement = new bootstrap.Toast(toast[0], {
+                autohide: true,
+                delay: 3000
+            });
+            toastElement.show();
+        }
+    });
+</script>

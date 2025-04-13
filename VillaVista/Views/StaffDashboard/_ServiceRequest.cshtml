@@ -1,0 +1,160 @@
+﻿@{
+    ViewData["Title"] = "Service Requests";
+    Layout = null;
+}
+
+<div class="container-fluid p-4">
+    <h4 class="mb-4">Recent Service Request</h4>
+
+    <div class="card border-0 shadow-sm">
+        <div class="card-body">
+            <!-- Filter Tabs -->
+            <div class="d-flex justify-content-between mb-4">
+                <div>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-sm px-3 active" style="background-color: #4b6255; color: white;">All Requests</button>
+                        <button type="button" class="btn btn-sm btn-light px-3">Pending</button>
+                        <button type="button" class="btn btn-sm btn-light px-3">In Progress</button>
+                        <button type="button" class="btn btn-sm btn-light px-3">Completed</button>
+                    </div>
+                </div>
+                <div>
+                    <button class="btn btn-sm btn-success px-3" id="newRequestBtn">+ New Requests</button>
+                </div>
+            </div>
+
+            <!-- Service Requests Table -->
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Request ID</th>
+                            <th>Resident</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1000</td>
+                            <td>Deaven Villa</td>
+                            <td>Plumbing</td>
+                            <td>
+                                <span class="badge rounded-pill px-3 py-2" style="background-color: #f0c94d; color: #333;">Pending</span>
+                            </td>
+                            <td>May 11, 2025</td>
+                            <td>
+                                <button class="btn btn-sm text-primary border-0" title="Edit">
+                                    <i class="bi bi-pencil-square"></i>
+                                </button>
+                                <button class="btn btn-sm text-danger border-0" title="Delete">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <!-- You can add more rows here as needed -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- New Request Modal -->
+<div class="modal fade" id="newRequestModal" tabindex="-1" aria-labelledby="newRequestModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="newRequestModalLabel">Create New Service Request</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="newRequestForm">
+                    <div class="mb-3">
+                        <label for="resident" class="form-label">Resident</label>
+                        <select class="form-select" id="resident" required>
+                            <option value="" selected disabled>Select resident</option>
+                            <option value="1">Deaven Villa</option>
+                            <option value="2">John Smith</option>
+                            <option value="3">Emma Johnson</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="requestType" class="form-label">Request Type</label>
+                        <select class="form-select" id="requestType" required>
+                            <option value="" selected disabled>Select type</option>
+                            <option value="plumbing">Plumbing</option>
+                            <option value="electrical">Electrical</option>
+                            <option value="hvac">HVAC</option>
+                            <option value="general">General Maintenance</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control" id="description" rows="3" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="priority" class="form-label">Priority</label>
+                        <select class="form-select" id="priority" required>
+                            <option value="low">Low</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success">Create Request</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .btn-group .btn {
+        border-radius: 20px;
+        font-size: 14px;
+        margin-right: 5px;
+    }
+
+    .table thead th {
+        border-top: none;
+        border-bottom: 1px solid #dee2e6;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .table td {
+        vertical-align: middle;
+        padding: 12px 8px;
+        border-bottom: 1px solid #eee;
+    }
+
+    .badge {
+        font-weight: normal;
+    }
+</style>
+
+<script>
+    $(document).ready(function() {
+        // Initialize new request modal
+        $("#newRequestBtn").click(function() {
+            $("#newRequestModal").modal('show');
+        });
+
+        // Handle tab switching
+        $(".btn-group .btn").click(function() {
+            $(".btn-group .btn").removeClass("active").removeClass("btn-success").addClass("btn-light");
+            $(this).removeClass("btn-light").addClass("active").css({
+                "background-color": "#4b6255",
+                "color": "white"
+            });
+
+            // Here you would typically load the filtered data
+            // loadServiceRequests($(this).text().trim());
+        });
+    });
+</script>
