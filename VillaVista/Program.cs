@@ -24,6 +24,11 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
 
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddAntiforgery(options =>
+{
+    options.HeaderName = "X-CSRF-TOKEN";
+});
+
 // Register IEmailSender
 builder.Services.AddTransient<IEmailSender, EmailSender>(); // Add this line
 var app = builder.Build();
@@ -59,6 +64,8 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
+
 
 // ✅ Ensure Roles & Default Admin Exist
 async Task EnsureRolesAndAdminExist(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager)

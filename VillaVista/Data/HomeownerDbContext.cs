@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿//HomeownerDbContext.cs
+
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using VillaVista.Models;

@@ -118,7 +118,7 @@
             <p>Homeowners Association</p>
         </div>
     <a href="#" class="nav-link active" id="dashboard-link"><i class="bi bi-grid-1x2"></i> Dashboard</a>
-        <a href="#" class="nav-link" id="residents-link"><i class="bi bi-people"></i> Residents</a>
+        <a href="#" class="nav-link" id="homeowners-link"><i class="bi bi-people"></i> Homeowners</a>
         <a href="#" class="nav-link" id="service-link"><i class="bi bi-tools"></i> Service Request</a>
         <a href="#" class="nav-link" id="billings-link"><i class="bi bi-cash-stack"></i> Billings & Payments</a>
         <a href="#" class="nav-link" id="events-link"><i class="bi bi-calendar3"></i> Events</a>
@@ -167,11 +167,11 @@
                 loadView("AdminDashboard");
             });
 
-            $("#residents-link").click(function (e) {
+            $("#homeowners-link").click(function (e) {
                 e.preventDefault();
                 $(".nav-link").removeClass("active");
                 $(this).addClass("active");
-                loadView("Residents");
+                loadView("Homeowners");
             });
 
             $("#service-link").click(function (e) {

@@ -1,18 +1,27 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using VillaVista.Models;
 
-public class Homeowner
+namespace VillaVista.Models
 {
-    [Key]
-    public int Id { get; set; }
+    public class Homeowner
+    {
+        [Key]
+        public int Id { get; set; }
 
-    [ForeignKey("User")]
-    public string UserId { get; set; }
-    public ApplicationUser User { get; set; }
+        [Required]
+        public string? UserId { get; set; }
 
-    [Required]
-    public string HouseNumber { get; set; }
+        [ForeignKey("UserId")]
+        public ApplicationUser User { get; set; }
 
-    public string Street { get; set; }
+        [Required]
+        public string? HouseNumber { get; set; }
+
+        public DateTime MoveInDate { get; set; }
+
+        public string Status { get; set; }
+
+        public string Notes { get; set; }
+    }
 }

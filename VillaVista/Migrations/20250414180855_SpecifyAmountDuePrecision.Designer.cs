@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VillaVista.Data;
 
@@ -11,9 +12,11 @@ using VillaVista.Data;
 namespace VillaVista.Migrations
 {
     [DbContext(typeof(HomeownerDbContext))]
-    partial class HomeownerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250414180855_SpecifyAmountDuePrecision")]
+    partial class SpecifyAmountDuePrecision
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

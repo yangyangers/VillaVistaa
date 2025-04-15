@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿//AccountController.cs
+
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using VillaVista.Data;
@@ -17,17 +20,22 @@ public class AccountController : Controller
     private readonly RoleManager<IdentityRole> _roleManager;
     private readonly HomeownerDbContext _context;
     private readonly IEmailSender _emailSender;
-    public AccountController(SignInManager<ApplicationUser> signInManager,
-                             UserManager<ApplicationUser> userManager,
-                             RoleManager<IdentityRole> roleManager,
-                             HomeownerDbContext context, 
-                             IEmailSender emailSender)
+    private readonly ILogger<AccountController> _logger;
+
+    public AccountController(
+        SignInManager<ApplicationUser> signInManager,
+        UserManager<ApplicationUser> userManager,
+        RoleManager<IdentityRole> roleManager,
+        HomeownerDbContext context,
+        IEmailSender emailSender,
+        ILogger<AccountController> logger)
     {
         _signInManager = signInManager;
         _userManager = userManager;
         _roleManager = roleManager;
         _context = context;
         _emailSender = emailSender;
+        _logger = logger;
     }
 
     [HttpPost]
@@ -92,6 +100,169 @@ public class AccountController : Controller
         return Json(new { success = true, message = "Registration successful!", redirectUrl = Url.Action("Index", "Home") });
     }
 
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> AddResident([FromForm] AddHomeownerViewModel model)
+    {
+        _logger.LogInformation("AddResident endpoint hit with data: {@Model}", model);
+
+        if (!ModelState.IsValid)
+        {
+            return Json(new { success = false, message = "Please fill all required fields." });
+        }
+
+        // Check if email already exists
+        var existingUser = await _userManager.FindByEmailAsync(model.Email);
+        if (existingUser != null)
+        {
+            return Json(new { success = false, message = "Email is already in use." });
+        }
+
+        // Create a user account for the resident
+        var user = new ApplicationUser
+        {
+            UserName = model.Email,
+            Email = model.Email,
+            Fullname = $"{model.FirstName} {model.LastName}",
+            PhoneNumber = model.Phone,
+            EmailConfirmed = true // Set to true to avoid email confirmation requirement
+        };
+
+        // Generate a temporary password
+        string tempPassword = GenerateRandomPassword();
+
+        var result = await _userManager.CreateAsync(user, tempPassword);
+        if (!result.Succeeded)
+        {
+            var errors = string.Join(", ", result.Errors.Select(e => e.Description));
+            return Json(new { success = false, message = errors });
+        }
+
+        // Assign the Homeowner role
+        await _userManager.AddToRoleAsync(user, "Homeowner");
+
+        // Create a Homeowner record
+        var homeowner = new Homeowner
+        {
+            UserId = user.Id,
+            HouseNumber = model.UnitNumber,
+            MoveInDate = model.MoveInDate,
+            Status = model.Status,
+            Notes = model.Notes
+        };
+
+        _context.Homeowners.Add(homeowner);
+        await _context.SaveChangesAsync();
+
+        // Return success response with temporary password
+        return Json(new
+        {
+            success = true,
+            message = "Homeowner added successfully!",
+            tempPassword = tempPassword
+        });
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> EditResident(EditHomeownerViewModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            // Optionally show an error message or redirect back
+            return RedirectToAction("Residents", "AdminDashboard");
+        }
+
+        // 1. Update the ASP.NET Identity User
+        var user = await _userManager.FindByIdAsync(model.Id);
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        user.Fullname = $"{model.FirstName} {model.LastName}";
+        user.Email = model.Email;
+        user.UserName = model.Email;
+        user.PhoneNumber = model.Phone;
+
+        await _userManager.UpdateAsync(user);
+
+        // 2. Update the Homeowner table
+        var homeowner = await _context.Homeowners.FirstOrDefaultAsync(h => h.UserId == user.Id);
+        if (homeowner != null)
+        {
+            homeowner.HouseNumber = model.UnitNumber;
+            homeowner.MoveInDate = model.MoveInDate;
+            homeowner.Status = model.Status;
+            homeowner.Notes = model.Notes;
+
+            await _context.SaveChangesAsync();
+        }
+
+        // 3. Redirect back to the resident list
+        return RedirectToAction("Residents", "AdminDashboard");
+    }
+
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteResident(string id)
+    {
+        if (string.IsNullOrEmpty(id))
+        {
+            return BadRequest(new { success = false, message = "Invalid user ID." });
+        }
+
+        var user = await _userManager.FindByIdAsync(id);
+        if (user == null)
+        {
+            return NotFound(new { success = false, message = "User not found." });
+        }
+
+        // Get the homeowner record
+        var homeowner = await _context.Homeowners.FirstOrDefaultAsync(h => h.UserId == id);
+        if (homeowner != null)
+        {
+            // Remove homeowner record
+            _context.Homeowners.Remove(homeowner);
+            await _context.SaveChangesAsync();
+        }
+
+        // Delete the user account
+        var result = await _userManager.DeleteAsync(user);
+        if (!result.Succeeded)
+        {
+            var errors = string.Join(", ", result.Errors.Select(e => e.Description));
+            return BadRequest(new { success = false, message = errors });
+        }
+
+        return Json(new { success = true, message = "Homeowner deleted successfully." });
+    }
+    private string GenerateRandomPassword()
+    {
+        // Generate a random password that meets ASP.NET Identity requirements
+        const string lowerChars = "abcdefghijklmnopqrstuvwxyz";
+        const string upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const string numbers = "0123456789";
+        const string specialChars = "!@#$%^&*()";
+
+        var random = new Random();
+        var password = new string(
+            // At least one uppercase
+            Enumerable.Repeat(upperChars, 2).Select(s => s[random.Next(s.Length)]).Concat(
+            // At least one lowercase
+            Enumerable.Repeat(lowerChars, 2).Select(s => s[random.Next(s.Length)])).Concat(
+            // At least one number
+            Enumerable.Repeat(numbers, 2).Select(s => s[random.Next(s.Length)])).Concat(
+            // At least one special character
+            Enumerable.Repeat(specialChars, 2).Select(s => s[random.Next(s.Length)])).Concat(
+            // Fill the rest with random characters
+            Enumerable.Repeat(upperChars + lowerChars + numbers + specialChars, 4)
+                .Select(s => s[random.Next(s.Length)])
+            ).ToArray());
+
+        // Shuffle the password characters
+        return new string(password.OrderBy(x => random.Next()).ToArray());
+    }
 
     [HttpPost]
     public async Task<IActionResult> Login([FromBody] LoginViewModel model)
@@ -164,7 +335,6 @@ public class AccountController : Controller
         return Ok(new { success = true });
     }
 
-
     [HttpGet]
     public IActionResult ResetPassword(string token, string email)
     {
@@ -200,6 +370,4 @@ public class AccountController : Controller
 
         return Json(new { success = true, message = "Password reset successful!" });
     }
-
-
 }
